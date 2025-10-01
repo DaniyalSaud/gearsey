@@ -1,0 +1,97 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+
+/*  root background */
+:root {
+  background: #181B21;
+}
+
+/* === Theme Variables === */
+@theme {
+  /* Backgrounds & Surfaces */
+  --color-bg: #181B21;
+  --color-surface: #242731;
+  --color-surface-elevated: #2F3340;
+  --color-border: #495061;
+
+  /* Accent Colors */
+  --color-primary-500: #D92B2B;
+  --color-primary-700: #A31F1F;
+  --color-secondary-500: #F8BA00;
+  --color-tertiary-500: #37CDB2;
+
+  /* Status Colors */
+  --color-success-500: #31C769;
+  --color-warning-500: #F06B2A;
+  --color-error-500: #E1423E;
+
+  /* Font Colors */
+  --color-font-main: #F4F6FA;
+  --color-font-secondary: #B8BFCB;
+
+  /* Fonts */
+  --font-sans: Poppins, Roboto, system-ui, sans-serif;
+
+  /* Animations */
+  --animate-fade-in: fadeIn 0.5s ease-in-out;
+  --animate-slide-up: slideUp 0.3s ease-out;
+  --animate-pulse-slow: pulse 3s infinite;
+}
+
+/* === Keyframes === */
+@keyframes fadeIn {
+  0%   { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+@keyframes slideUp {
+  0%   { transform: translateY(10px); opacity: 0 }
+  100% { transform: translateY(0); opacity: 1 }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1 }
+  50%      { opacity: 0.5 }
+}
+
+/* === Component Classes === */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-700 text-font-main 
+           px-6 py-3 rounded-lg font-bold 
+           transition-all duration-200 shadow-md hover:shadow-lg 
+           active:transform active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-surface-elevated hover:bg-surface text-font-main 
+           px-6 py-3 rounded-lg font-semibold 
+           transition-all duration-200 border border-border hover:border-primary-500;
+  }
+  
+  .card {
+    @apply bg-surface rounded-xl shadow-md hover:shadow-lg 
+           transition-all duration-300 border border-border;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-border rounded-lg 
+           focus:outline-none focus:ring-2 focus:ring-primary-500 
+           focus:border-primary-500 transition-all duration-200 bg-surface-elevated text-font-main;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #D92B2B; /* primary-500 red */
+}
+
+.swiper-pagination-bullet {
+  background: #37CDB2; /* tertiary teal */
+}
+
+.swiper-pagination-bullet-active {
+  background: #F8BA00; /* secondary yellow */
+}
+
