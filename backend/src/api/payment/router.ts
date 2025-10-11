@@ -9,10 +9,10 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("details/:paymentId", getPaymentDetails);
-router.get("details", listTransactions);
-router.post("process", processPayment);
-router.post("create", createPayment);
-router.post("refund", refundPayment);
+router.get("/details/:paymentId", getPaymentDetails);
+router.get("/details", listTransactions);
+router.post("/process", processPayment);
+router.post("/create", createPayment);
+router.post("/refund", refundPayment);
 
 export default router;
