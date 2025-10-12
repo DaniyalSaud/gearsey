@@ -8,9 +8,27 @@ type OrderBody = {
   items: IOrderItem[];
 };
 
-export async function getOrders(req: Request, res: Response) {
+export async function getAllOrders(req: Request, res: Response) {
   try {
-    const { userId } = req.body;
+    const { limit } = req.query;
+    const orders = await Order.find().limit(Number(limit) || 10);
+
+    res.status(200).json({
+      message: "All orders fetched successfully",
+      orders,
+    });
+  } catch (error) {
+    console.error("Error fetching all orders:", error as Error);
+    res.status(400).json({
+      message: "Failed to fetch all orders",
+      error: (error as Error).message,
+    });
+  }
+}
+
+export async function getUserOrders(req: Request, res: Response) {
+  try {
+    const { userId } = req.params;
     const { limit } = req.query;
     if (!userId) {
       return res
@@ -28,6 +46,32 @@ export async function getOrders(req: Request, res: Response) {
     console.error("Error fetching orders:", error as Error);
     res.status(400).json({
       message: "Failed to fetch orders",
+      error: (error as Error).message,
+    });
+  }
+}
+
+export async function getUserOrderItems(req: Request, res: Response) {
+  try {
+    const { userId, orderId } = req.params;
+    if (!userId || !orderId) {
+      return res
+        .status(403)
+        .json({ message: "Missing userId or orderId in request params" });
+    }
+
+    const order = await Order.findOne({ _id: orderId, userId });
+    const orderItems = await OrderItem.find({ orderId });
+
+    res.status(200).json({
+      message: "Order items fetched successfully",
+      order,
+      items: orderItems,
+    });
+  } catch (error) {
+    console.error("Error fetching order items:", error as Error);
+    res.status(400).json({
+      message: "Failed to fetch order items",
       error: (error as Error).message,
     });
   }
@@ -60,35 +104,6 @@ export async function createOrder(req: Request, res: Response) {
     console.error("Error creating order:", error as Error);
     res.status(400).json({
       message: "Failed to create order",
-      error: (error as Error).message,
-    });
-  }
-}
-
-export async function getOrderById(req: Request, res: Response) {
-  try {
-    const { orderId, userId } = req.body;
-    if (!orderId || !userId) {
-      return res
-        .status(403)
-        .json({ message: "Missing orderId or userId in request body" });
-    }
-
-    const order = await Order.findOne({ _id: orderId, userId });
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
-    const orderItems = await OrderItem.find({ orderId: order._id });
-    if (!orderItems) {
-      return res.status(404).json({ message: "Order items not found" });
-    }
-
-    res.status(200).json({ message: "Order fetched successfully", order, orderItems });
-  } catch (error) {
-    console.error("Error fetching order by ID:", error as Error);
-    res.status(400).json({
-      message: "Failed to fetch order by ID",
       error: (error as Error).message,
     });
   }

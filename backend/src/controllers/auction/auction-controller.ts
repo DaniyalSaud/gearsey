@@ -3,37 +3,27 @@ import { type Request, type Response } from "express";
 
 export async function getAuctions(req: Request, res: Response) {
   try {
-    const { limit } = req.query;
-    const auctions: IAuction[] = await Auction.find().limit(
-      limit ? Number(limit) : 10
-    );
+    const { limit, start_time, end_time } = req.query;
+    let formattedStartTime: Date | undefined;
+    let formattedEndTime: Date | undefined;
+    if (start_time) {
+      formattedStartTime = new Date(start_time as string);
+    }
+
+    if (end_time) {
+      formattedEndTime = new Date(end_time as string);
+    }
+
+    const auctions: IAuction[] = await Auction.find({
+      start_time: formattedStartTime,
+      end_time: formattedEndTime,
+    }).limit(limit ? Number(limit) : 10);
     res
       .status(200)
       .json({ auctions, message: "Auctions fetched successfully." });
   } catch (error) {
     console.error("Error fetching auctions:", error);
     res.status(400).json({ message: "Failed to fetch auctions." });
-  }
-}
-
-export async function getAuctionBySellerId(req: Request, res: Response) {
-  try {
-    const { sellerId } = req.body;
-    const { limit } = req.query;
-    if (!sellerId) {
-      return res.status(403).json({ message: "Seller ID is required." });
-    }
-
-    const auctions: IAuction[] = await Auction.find({ sellerId }).limit(
-      limit ? Number(limit) : 10
-    );
-
-    res
-      .status(200)
-      .json({ auctions, message: "Auctions fetched successfully." });
-  } catch (error) {
-    console.error("Error fetching auctions by seller id:", error);
-    res.status(400).json({ message: (error as Error).message });
   }
 }
 

@@ -1,20 +1,22 @@
 import express from "express";
 import {
-  getOrders,
   createOrder,
-  getOrderById,
   confirmOrder,
   cancelOrder,
   deleteOrder,
-} from "@/controllers/orders-controller/order-controller.js";
+  getUserOrders,
+  getAllOrders,
+  getUserOrderItems,
+} from "@/controllers/order/order-controller.js";
 
 const router = express.Router();
 
-router.get("/", getOrders);
+router.get("/", getAllOrders);
+router.get("/:userId", getUserOrders);
+router.get("/:userId/:orderId", getUserOrderItems);
 router.post("/", createOrder);
-router.get("/", getOrderById);
-router.put("/", confirmOrder);
-router.put("/", cancelOrder);
 router.delete("/", deleteOrder);
+router.put("/confirm", confirmOrder);
+router.put("/cancel", cancelOrder);
 
 export default router;

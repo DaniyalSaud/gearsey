@@ -75,7 +75,30 @@ export async function processPayment(req: Request, res: Response) {
   }
 }
 
-export async function refundPayment(req: Request, res: Response) {}
+export async function refundPayment(req: Request, res: Response) {
+  try {
+    const { paymentId } = req.body;
+    if (!paymentId) {
+      return res.status(400).json({ error: "Payment ID is required" });
+    }
+
+    const payment = await Payment.findByIdAndUpdate(
+      paymentId,
+      { status: "Refunded" },
+      { new: true }
+    );
+    if (!payment) {
+      return res.status(404).json({ error: "Payment not found" });
+    }
+
+    res
+      .status(200)
+      .json({ data: payment, message: "Payment refunded successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: (error as Error).message });
+  }
+}
 
 export async function listTransactions(req: Request, res: Response) {
   try {
@@ -89,7 +112,7 @@ export async function listTransactions(req: Request, res: Response) {
     // Fetch 5 recent transactions for the user
     const transactions = await Payment.find({ userId })
       .sort({ date: -1 })
-      .limit(Number(limit))
+      .limit(limit ? Number(limit) : 10)
       .select("amount status");
 
     res.status(200).json({

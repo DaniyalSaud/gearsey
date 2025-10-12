@@ -9,7 +9,7 @@ export interface IPayment {
     | "EasyPaisa"
     | "Bank Transfer";
   amount: number;
-  status: "Pending" | "Completed" | "Failed";
+  status: "Pending" | "Completed" | "Failed" | "Refunded";
 }
 
 const paymentSchema = new Schema<IPayment>(
@@ -29,7 +29,7 @@ const paymentSchema = new Schema<IPayment>(
     amount: { type: Number, required: true },
     status: {
       type: String,
-      enum: ["Pending", "Completed", "Failed"],
+      enum: ["Pending", "Completed", "Failed", "Refunded"],
       default: "Pending",
     },
   },
