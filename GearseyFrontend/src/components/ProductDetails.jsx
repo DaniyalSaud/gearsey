@@ -82,9 +82,9 @@ function ProductDetails() {
         Back to Marketplace
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {/* Swiper Image Carousel */}
-        <div className="bg-surface rounded-xl p-4 shadow-lg">
+        <div className="bg-surface lg:grid-cols rounded-xl p-4 shadow-lg">
           <Swiper
             modules={[Navigation, Pagination]}
             navigation
@@ -186,7 +186,7 @@ function ProductDetails() {
               </div>
 
               <div className="bg-secondary-500 bg-opacity-10 border border-secondary-500 p-4 rounded-lg">
-                <p className="text-sm text-secondary-500">
+                <p className="text-sm">
                   <strong>Note:</strong> Seller may extend auction if reserve
                   not met.
                 </p>
@@ -247,3 +247,5 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+
+
