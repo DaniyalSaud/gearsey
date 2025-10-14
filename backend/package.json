@@ -4,8 +4,9 @@
   "type": "module",
   "main": "server.ts",
   "scripts": {
-    "start": "tsx ./src/server.ts",
-    "dev": "tsx watch ./src/server.ts"
+    "start": "tsx ./dist/server.ts",
+    "dev": "tsx watch ./src/server.ts",
+    "build": "tsc"
   },
   "author": "danial",
   "license": "MIT",
