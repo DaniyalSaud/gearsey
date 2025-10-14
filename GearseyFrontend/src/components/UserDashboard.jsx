@@ -7,6 +7,7 @@ import {
   Edit,
   MoreHorizontal,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 
 function UserDashboard() {
@@ -87,7 +88,9 @@ function UserDashboard() {
                           </div>
                         </div>
                       </div>
-                      <button className="btn-secondary">View Item</button>
+                      <NavLink to={`/product/${bid.id}`}>
+                        <button className="btn-secondary">View Item</button>
+                      </NavLink>
                     </div>
                   </div>
                 ))
