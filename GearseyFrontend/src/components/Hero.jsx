@@ -1,48 +1,81 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { Search, Zap } from "lucide-react";
 
 function Hero() {
   return (
-    <div className="relative bg-bg">
-      {/* Overlay for depth */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary-700 via-bg to-surface-elevated opacity-80"></div>
+    <div className="relative overflow-hidden min-h-[82vh] bg-bg">
+      {/* Subtle background gradient - WITH BREATHING ANIMATION */}
+      <div
+        className="absolute inset-0 animate-gradient-pulse"
+        style={{
+          background:
+            "radial-gradient(ellipse at top, #37CDB2 0%, transparent 50%), radial-gradient(ellipse at bottom right, #D92B2B 0%, transparent 50%)",
+        }}
+      />
+
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.02] animate-fade-in"
+        style={{
+          backgroundImage: `linear-gradient(#495061 1px, transparent 1px), linear-gradient(90deg, #495061 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center flex flex-col items-center">
-        {/* Vintage tag highlight */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-500 text-bg font-bold rounded-full shadow-lg mb-6 tracking-wider text-base animate-pulse-slow">
-          <Zap size={18} className="text-warning-500 animate-bounce" />
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-surface-elevated text-tertiary-500 font-bold rounded-full border border-tertiary-500/30 mb-8 tracking-wider text-sm animate-slide-down animate-delay-200">
+          <Zap size={18} className="fill-tertiary-500" />
           Vintage & Rare Finds
         </div>
 
-        {/* Headline */}
-        <h1 className="text-4xl md:text-6xl font-black text-secondary-500 drop-shadow-lg mb-5 animate-fade-in tracking-tight">
-          Find Car Parts & Classic Treasures
+        {/* Main Heading */}
+        <h1 className="text-5xl md:text-7xl font-black mb-6 tracking-tight text-font-main leading-tight animate-slide-up animate-delay-400">
+          Find Car Parts &<br />
+          <span className="bg-gradient-to-r from-secondary-500 via-tertiary-500 to-primary-500 bg-clip-text text-transparent">
+            Classic Treasures
+          </span>
         </h1>
-        {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-font-secondary mb-10 animate-slide-up max-w-2xl mx-auto">
-          Buy instantly or join bidding wars for rare collectibles from verified
-          sellers.
+
+        {/* Subheading */}
+        <p className="text-xl md:text-2xl mb-12 text-font-secondary max-w-2xl mx-auto leading-relaxed animate-slide-up animate-delay-600">
+          Buy instantly or join bidding wars for rare collectibles from{" "}
+          <span className="font-semibold text-tertiary-500">
+            verified sellers
+          </span>
+          .
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full max-w-2xl mx-auto">
+        {/* Search Section */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-3xl mx-auto mb-8 animate-slide-up animate-delay-800">
           <div className="relative flex-1 w-full">
             <input
               type="text"
               placeholder="Search part, model, or vintage year..."
-              className="w-full pl-5 pr-14 py-5 rounded-xl text-font-main text-lg bg-surface border border-border shadow-md focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all duration-200"
+              className="input-field pr-14"
               aria-label="Search by car part, model, or category"
             />
             <button
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary-500 hover:text-tertiary-500 transition-colors"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-font-secondary hover:text-secondary-500 transition-colors"
               aria-label="Search"
             >
-              <Search size={28} />
+              <Search size={24} />
             </button>
           </div>
-          <button className="bg-primary-500 text-font-main px-10 py-5 rounded-xl font-black text-lg shadow-xl hover:bg-tertiary-500 hover:text-bg transition-colors flex items-center gap-3 whitespace-nowrap animate-pulse-slow border-2 border-primary-700">
-            <Zap size={24} />
+          <button className="btn-primary flex items-center gap-2 whitespace-nowrap px-8 py-3.5 text-base">
+            <Zap size={20} className="fill-current" />
             Search Now
           </button>
+        </div>
+
+        {/* Browse Button */}
+        <div className="mt-6 animate-slide-up animate-delay-1000">
+          <NavLink to="/filter">
+            <button className="btn-secondary uppercase tracking-wider font-semibold text-sm px-8 py-3">
+              Browse Inventory
+            </button>
+          </NavLink>
         </div>
       </div>
     </div>

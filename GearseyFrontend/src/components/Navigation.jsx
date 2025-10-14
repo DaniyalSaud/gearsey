@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Search, ShoppingCart, User, ChevronDown, Menu, X } from "lucide-react";
 import { useAppContext } from "../context/AppContext";
 
@@ -9,11 +9,36 @@ function Navigation() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Connect this to your app’s search endpoint for real functionality
     console.log("Searching for:", searchQuery);
+  };
+
+  // Handle Marketplace click - scroll to section or navigate to homepage first
+  const handleMarketplaceClick = (e) => {
+    e.preventDefault();
+
+    if (location.pathname === "/") {
+      // Already on homepage, just scroll to marketplace section
+      document.getElementById("marketplace")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    } else {
+      // Navigate to homepage first, then scroll
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById("marketplace")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+    }
+
+    // Close mobile menu if open
+    setIsMenuOpen(false);
   };
 
   return (
@@ -41,17 +66,18 @@ function Navigation() {
             >
               Home
             </Link>
-            <Link
-              to="/"
-              className="text-font-main hover:text-secondary-500 font-bold uppercase tracking-wide transition-colors"
+            <a
+              href="#marketplace"
+              onClick={handleMarketplaceClick}
+              className="text-font-main hover:text-secondary-500 font-bold uppercase tracking-wide transition-colors cursor-pointer"
             >
               Marketplace
-            </Link>
+            </a>
             <Link
               to="/sell"
               className="text-font-main hover:text-primary-500 font-bold uppercase tracking-wide transition-colors"
             >
-              Sell an Item
+              Sell <span className="max-lg:hidden">an Item</span>
             </Link>
           </div>
 
@@ -180,18 +206,21 @@ function Navigation() {
               <Link
                 to="/"
                 className="block py-2 text-font-main font-bold uppercase tracking-wide hover:text-primary-500 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
-              <Link
-                to="/"
-                className="block py-2 text-font-main font-bold uppercase tracking-wide hover:text-secondary-500 transition-colors"
+              <a
+                href="#marketplace"
+                onClick={handleMarketplaceClick}
+                className="block py-2 text-font-main font-bold uppercase tracking-wide hover:text-secondary-500 transition-colors cursor-pointer"
               >
                 Marketplace
-              </Link>
+              </a>
               <Link
                 to="/sell"
                 className="block py-2 text-font-main font-bold uppercase tracking-wide hover:text-primary-500 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
                 Sell an Item
               </Link>
