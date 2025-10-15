@@ -26,6 +26,8 @@ function ProductGrid() {
         ))}
       </div>
 
+
+
       {filteredProducts.length === 0 && (
         <div className="text-center py-16">
           <div className="text-6xl mb-4">🔍</div>

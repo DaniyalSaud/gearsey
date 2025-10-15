@@ -19,7 +19,7 @@ const initialState = {
       price: 120,
       type: "fixed",
       condition: "Used (Good)",
-      category: "Engines",
+      category: "engines", // Updated to match category IDs
       description:
         "Original carburetor, fits 1968 Mustang models. Excellent working condition with all original parts intact.",
       images: [
@@ -36,7 +36,7 @@ const initialState = {
       startingPrice: 200,
       type: "auction",
       condition: "Excellent",
-      category: "Accessories",
+      category: "accessories", // Updated to match category IDs
       description:
         "Beautiful vintage steering wheel from the 1960s. Perfect for classic car restoration projects.",
       images: [
@@ -56,7 +56,7 @@ const initialState = {
       price: 85,
       type: "fixed",
       condition: "New",
-      category: "Body",
+      category: "body", // Updated to match category IDs
       description:
         "High-quality chrome exhaust tips, universal fit for most vehicles.",
       images: [
