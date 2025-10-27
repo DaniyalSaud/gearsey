@@ -1,6 +1,6 @@
-import { model, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 
-export interface IOrder {
+export interface IOrder extends Document {
   userId: string;
   total_amount: number;
   payment_status: "Pending" | "Paid" | "Failed" | "Refunded";

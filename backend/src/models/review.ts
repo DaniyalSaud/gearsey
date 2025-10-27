@@ -1,7 +1,6 @@
-import { model, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema, type WithTimestamps } from "mongoose";
 
-interface IReview {
-  listingId: string;
+interface IReview extends WithTimestamps<Document> {
   userId: string;
   partId: string;
   rating: 0 | 1 | 2 | 3 | 4 | 5;
@@ -9,7 +8,6 @@ interface IReview {
 }
 
 const ReviewSchema = new Schema<IReview>({
-  listingId: { type: String, required: true },
   userId: { type: String, required: true },
   partId: { type: String, required: true },
   rating: {
@@ -21,3 +19,4 @@ const ReviewSchema = new Schema<IReview>({
 }, { timestamps: true });
 
 export const Review: Model<IReview> = model<IReview>("Review", ReviewSchema);
+

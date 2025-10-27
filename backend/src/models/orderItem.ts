@@ -1,6 +1,6 @@
-import { Model, model, Schema } from "mongoose";
+import { Document, Model, model, Schema } from "mongoose";
 
-export interface IOrderItem {
+export interface IOrderItem extends Document{
   orderId: string;
   partId: string;
   quantity: number;

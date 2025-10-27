@@ -1,6 +1,6 @@
-import { model, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 
-export interface IBid {
+export interface IBid extends Document {
     auctionId: string;
     userId: string;
     bid_amount: number;

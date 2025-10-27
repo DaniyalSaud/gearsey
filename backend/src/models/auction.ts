@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
+import { Document, model, Schema } from "mongoose";
 
-export interface IAuction {
+export interface IAuction extends Document {
     partId: string;
     start_price: number;
     current_price: number;

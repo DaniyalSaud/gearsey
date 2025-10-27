@@ -1,11 +1,11 @@
-import { model, Model, Schema } from "mongoose";
+import { Document, model, Model, Schema, type WithTimestamps } from "mongoose";
 import { ObjectId } from "mongodb";
 
-export interface IListing {
+export interface IListing extends WithTimestamps<Document> {
   name: string;
   description: string;
   price: number;
-  imageId: ObjectId;
+  imageIds: ObjectId[];
   sellerId: ObjectId;
   categoryId: ObjectId;
   condition: "New" | "Used" | "Refurbished";
@@ -17,7 +17,7 @@ const ListingSchema = new Schema<IListing>({
   name: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  imageId: { type: Schema.Types.ObjectId, required: true, unique: true},
+  imageIds: [{ type: Schema.Types.ObjectId, required: true, ref: 'Image' }],
   sellerId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
   categoryId: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
   condition: {

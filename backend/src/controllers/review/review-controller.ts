@@ -9,6 +9,7 @@ export async function getAllReviews(req: Request, res: Response) {
 
     res.status(200).json({
       message: "Reviews fetched successfully",
+      count: reviews.length,
       reviews,
     });
   } catch (err) {
@@ -30,9 +31,14 @@ export async function getProductReviews(req: Request, res: Response) {
       });
     }
 
-    const reviews = await Review.find({ productId }).limit(
+    // Get the most recent reviews for the product
+    const reviews = await Review.find({ partId: productId }).limit(
       limit ? Number(limit) : 10
-    );
+    ).sort({ createdAt: -1 });
+
+    if (reviews.length === 0) {
+      throw new Error("No reviews found for this product");
+    }
 
     res.status(200).json({
       message: "Product reviews fetched successfully",
@@ -59,7 +65,7 @@ export async function getUserReviews(req: Request, res: Response) {
 
     const reviews = await Review.find({ userId }).limit(
       limit ? Number(limit) : 10
-    );
+    ).sort({ createdAt: -1 });
 
     res.status(200).json({
       message: "User reviews fetched successfully",
@@ -75,16 +81,15 @@ export async function getUserReviews(req: Request, res: Response) {
 
 export async function createReview(req: Request, res: Response) {
   try {
-    const { userId, rating, comment } = req.body;
+    const { userId, rating, comment, partId } = req.body;
 
-    if (!userId || !rating) {
-      return res.status(404).json({
-        message: "Product ID, User ID and Rating are required",
-      });
+    if (!userId || !rating || !partId) {
+      throw new Error("Part ID, User ID and Rating are required. Some are missing.");
     }
 
     const newReview = new Review({
       userId,
+      partId,
       rating,
       comment,
     });
@@ -116,9 +121,7 @@ export async function deleteReview(req: Request, res: Response) {
     const deletedReview = await Review.findByIdAndDelete(reviewId);
 
     if (!deletedReview) {
-      return res.status(404).json({
-        message: "Review not found",
-      });
+      throw new Error("Review not found");
     }
 
     res.status(200).json({

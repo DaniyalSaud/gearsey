@@ -6,7 +6,8 @@
   "scripts": {
     "start": "tsx ./dist/server.ts",
     "dev": "tsx watch ./src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "clear-images": "rm -rf ./src/public/*"
   },
   "author": "danial",
   "license": "MIT",
@@ -16,6 +17,8 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "express-slow-down": "^3.0.0",
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.1",
     "multer": "^2.0.2",

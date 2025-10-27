@@ -1,6 +1,6 @@
-import { Model, model, Schema } from "mongoose";
+import { Document, Model, model, Schema } from "mongoose";
 
-export interface IPayment {
+export interface IPayment extends Document {
   orderId: string;
   payment_method:
     | "Credit Card"
